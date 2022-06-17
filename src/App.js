@@ -11,7 +11,7 @@ function App() {
   });
   let [like, setLike] = useState(likeList);
   let [modal, setModal] = useState(false);
-
+  let [modelTitle, setModelTitle] = useState(0);
   return (
     <div className="App">
       <div className="black-nav">
@@ -23,6 +23,7 @@ function App() {
             <h4
               onClick={() => {
                 setModal(!modal);
+                setModelTitle(index);
               }}
             >
               {post}
@@ -38,21 +39,27 @@ function App() {
               {like[index]}
             </h4>
             <p>5월 27일 발행</p>
-            {modal ? <Modal setTitle={setTitle} title={titles[0]}/> : null}
           </div>
         );
       })}
+      {modal ? <Modal setTitle={setTitle} titles={titles} modelTitle={modelTitle} /> : null}
     </div>
   );
 }
 
-const Modal = (props) => {
+const Modal = props => {
   return (
     <div className="modal">
-      <h4>{props.title}</h4>
+      <h4>{props.titles[props.modelTitle]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
-      <button onClick={()=>{props.setTitle(['여자 코트 추천', '여자 코트 추천', '기타'])}}>글수정</button>
+      <button
+        onClick={() => {
+          props.setTitle(['여자 코트 추천', '여자 코트 추천', '기타']);
+        }}
+      >
+        글수정
+      </button>
     </div>
   );
 };
